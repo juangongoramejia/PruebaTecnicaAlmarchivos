@@ -1,0 +1,43 @@
+﻿@model PruebaTecnicaAlmarchivos.Models.Personas
+
+@{
+    ViewBag.Title = "Registrar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row" style="margin-top:30px">
+    <div class="col-sm-12">
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <h4>Crear Nueva Persona</h4>
+            </div>
+            <div class="panel-body">
+                <form action="@Url.Action("Registrar","Personas")" method="post">
+                    <div class="form-group">
+                        <label>Nombres</label>
+                        <input type="text" class="form-control" name="Nombres" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Apellidos</label>
+                        <input type="text" class="form-control" name="Apellidos" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Numero Identificación</label>
+                        <input type="text" class="form-control" name="NumeroIdentificacion" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" class="form-control" name="Email" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo Identificación</label>
+                        <input type="text" class="form-control" name="TipoIdentificacion" required />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Registrar</button>
+                    <a class="btn btn-warning" href="@Url.Action("Inicio","Personas")">Volver</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

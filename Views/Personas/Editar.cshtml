@@ -1,0 +1,50 @@
+﻿@model PruebaTecnicaAlmarchivos.Models.Personas
+
+@{
+    ViewBag.Title = "Editar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row" style="margin-top:30px">
+    <div class="col-sm-12">
+
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <h4>EDITAR PERSONA</h4>
+            </div>
+            <div class="panel-body">
+                <form action="@Url.Action("Editar","Personas")" method="post">
+                    <input type="hidden" class="form-control" name="Id" value="@Html.DisplayTextFor(m => m.Id)" />
+                    <div class="form-group">
+                        <label>Nombres</label>
+                        <input type="text" class="form-control" name="Nombres" value="@Html.DisplayTextFor(m => m.Nombres)" />
+                    </div>
+                    <div class="form-group">
+                        <label>Apellidos</label>
+                        <input type="text" class="form-control" name="Apellidos" value="@Html.DisplayTextFor(m => m.Apellidos)" />
+                    </div>
+                    <div class="form-group">
+                        <label>NumeroI dentificacion</label>
+                        <input type="text" class="form-control" name="NumeroIdentificacion" value="@Html.DisplayTextFor(m => m.NumeroIdentificacion)" />
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" class="form-control" name="Email" value="@Html.DisplayTextFor(m => m.Email)" />
+                    </div>
+                    <div class="form-group">
+                        
+                        <input type="hidden" class="form-control" name="TipoIdentificacion" value="@Html.DisplayTextFor(m => m.TipoIdentificacion)" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <a class="btn btn-warning" href="@Url.Action("Inicio","Personas")">Volver</a>
+
+                </form>
+
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+

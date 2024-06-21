@@ -1,0 +1,60 @@
+﻿@model List<PruebaTecnicaAlmarchivos.Models.Personas>
+
+@{
+    ViewBag.Title = "Inicio";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row" style="margin-top:30px">
+    <div class="col-sm-12">
+
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <h4>Lista de Personas</h4>
+            </div>
+            <div class="panel-body">
+                <a class="btn btn-success" href="@Url.Action("Registrar","Personas")">Crear Nuevo</a>
+                <hr />
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nombres</th>
+                                <th>Apellidos</th>
+                                <th>NumeroIdentificacion</th>
+                                <th>Email</th>
+                                <th>FechaCreacion</th>
+                                <th style="width:150px"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (PruebaTecnicaAlmarchivos.Models.Personas item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Nombres</td>
+                                    <td>@item.Apellidos</td>
+                                    <td>@item.NumeroIdentificacion</td>
+                                    <td>@item.Email</td>
+                                    <td>@item.FechaCreacion</td>
+
+                                    <td>
+                                        <a class="btn btn-primary btn-sm" href="@Url.Action("Editar","Personas", new { Id = item.Id })">Editar</a>
+                                        <a class="btn btn-danger btn-sm" href="@Url.Action("Eliminar","Personas", new { Id = item.Id })">Eliminar</a>
+
+                                    </td>
+
+                                </tr>
+
+                            }
+
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
