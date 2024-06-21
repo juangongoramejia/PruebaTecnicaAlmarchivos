@@ -1,0 +1,127 @@
+--CREACION BASE DE DATOS
+
+CREATE DATABASE PruebaAlmaArchivos 
+
+use PruebaAlmaArchivos
+
+--CREACION DE TABLAS
+
+CREATE TABLE USUARIO (
+IdUsuario INT PRIMARY KEY IDENTITY (1,1),
+Correo VARCHAR(100),
+Clave VARCHAR(500),
+FechaCreacion DATETIME
+)
+
+
+CREATE TABLE Personas (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Nombres VARCHAR(100),
+    Apellidos VARCHAR(100),
+    NumeroIdentificacion VARCHAR(50),
+    Email VARCHAR(100),
+    TipoIdentificacion VARCHAR(50),
+    FechaCreacion DATETIME
+);
+
+--CREACION DE PROCEDIMIENTOS ALMACENADOS
+
+CREATE PROCEDURE sp_RegistrarUsuario(
+@Correo VARCHAR(100),
+@Clave VARCHAR(500),
+@Registrado bit output,
+@Mensaje varchar(100) output
+)
+as
+begin
+
+	if (not exists(SELECT * FROM USUARIO WHERE Correo = @Correo))
+	begin
+		insert into USUARIO(Correo, Clave, FechaCreacion)
+		values (@Correo, @Clave, GETDATE())
+		set @Registrado = 1
+		set @Mensaje = 'usuario registrado'
+	end
+	else
+	begin
+		set @Registrado = 0
+		set @Mensaje = 'correo ya existe'
+	end
+	end
+
+
+CREATE PROCEDURE sp_ValidarUsuario(
+@Correo VARCHAR(100),
+@Clave VARCHAR(500)
+)
+as
+	begin
+		if(exists(select * from USUARIO where Correo = @Correo AND Clave = @Clave))
+			select idusuario from USUARIO where Correo = @Correo AND Clave = @Clave
+		else
+		select '0'
+
+	end
+
+--CREAR REGISTROS
+
+--INSERTAMOS UN VALOR INICIAL PARA CARGAR DATOS EN LA GRILLA
+INSERT INTO Personas (Nombres, Apellidos, NumeroIdentificacion, Email, TipoIdentificacion, FechaCreacion)
+VALUES ('Juan', 'Pérez', '123456789', 'juan.perez@example.com', 'DNI', GETDATE());
+
+--CREAMOS LOS PROCEDIMIENTOS ALMACENADOS PARA EL CRUD
+
+CREATE PROCEDURE sp_Registrar(
+	@Nombres Varchar(100),
+	@Apellidos VARCHAR(100),
+	@NumeroIdentificacion VARCHAR(50),
+	@Email VARCHAR(100),
+	@TipoIdentificacion VARCHAR(50)
+	)
+	AS
+	BEGIN
+		insert into Personas(Nombres,Apellidos,NumeroIdentificacion,Email,
+		TipoIdentificacion, FechaCreacion) Values ( @Nombres, @Apellidos, @NumeroIdentificacion,
+		@Email, @TipoIdentificacion, GETDATE())
+	END
+
+
+CREATE PROCEDURE sp_Editar
+    @Id INT,
+    @Nombres VARCHAR(100),
+    @Apellidos VARCHAR(100),
+    @NumeroIdentificacion VARCHAR(50),
+    @Email VARCHAR(100),
+    @TipoIdentificacion VARCHAR(50)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    IF EXISTS (SELECT 1 FROM Personas WHERE Id = @Id)
+    BEGIN
+        UPDATE Personas
+        SET Nombres = @Nombres, 
+            Apellidos = @Apellidos,
+            NumeroIdentificacion = @NumeroIdentificacion, 
+            Email = @Email, 
+            TipoIdentificacion = @TipoIdentificacion
+        WHERE Id = @Id;
+    END
+    ELSE
+    BEGIN
+        -- Mensaje opcional si el Id no existe
+        PRINT 'El Id especificado no existe.';
+    END
+END
+
+
+
+CREATE PROCEDURE sp_Eliminar(
+@Id int
+)
+AS
+BEGIN
+		DELETE FROM Personas WHERE Id = @Id
+END
+
+
